@@ -1,9 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 func main() {
-	fmt.Println("YEAH BUDDY")
-	server := NewAPIServer(":3000")
+	// Database Connection;
+	store, err := NewPostgresStore()
+	if err != nil {
+		log.Fatal("Connection to the database was failed")
+	}
+
+	fmt.Printf("%+v\n", store)
+
+	// Server;
+	//store.Init()
+	server := NewAPIServer(":3000", store)
 	server.Run()
 }
